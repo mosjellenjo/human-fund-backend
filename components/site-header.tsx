@@ -29,7 +29,9 @@ export function SiteHeader() {
           <Button variant="outline" size="sm" className="hidden sm:flex">
             Sign In
           </Button>
-          <Button size="sm">Donate Now</Button>
+          <Button size="sm" asChild>
+            <a href="#contact">Donate Now</a>
+          </Button>
         </div>
       </div>
     </header>

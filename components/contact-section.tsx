@@ -15,6 +15,7 @@ export function ContactSection() {
     message: "",
     submitted: false,
     error: false,
+    donationCause: "",
   })
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -34,9 +35,9 @@ export function ContactSection() {
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Get In Touch</h2>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Contact & Donations</h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Have questions about The Human Fund? Want to make a donation? We'd love to hear from you.
+              Have questions or want to make a donation? Fill out the form below and we'll get back to you as soon as possible.
             </p>
           </div>
         </div>
@@ -44,10 +45,7 @@ export function ContactSection() {
           <div>
             <Card>
               <CardHeader>
-                <CardTitle>Contact Us</CardTitle>
-                <CardDescription>
-                  Fill out the form below and we'll get back to you as soon as possible.
-                </CardDescription>
+                {/* Removed Contact Us title and description for clarity */}
               </CardHeader>
               <CardContent>
                 {formState.submitted ? (
@@ -92,6 +90,27 @@ export function ContactSection() {
                         placeholder="Enter your email"
                         required
                       />
+                    </div>
+                    <div className="space-y-2">
+                      <label
+                        htmlFor="donation-cause"
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                        Donation Cause (optional)
+                      </label>
+                      <select
+                        id="donation-cause"
+                        value={formState.donationCause || ''}
+                        onChange={e => setFormState({ ...formState, donationCause: e.target.value })}
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:text-sm"
+                      >
+                        <option value="">General Inquiry</option>
+                        <option value="Festivus for the Rest of Us">Festivus for the Rest of Us — Keep the tradition alive — aluminum poles aren't cheap.</option>
+                        <option value="The Anti-Dentite Defense Fund">The Anti-Dentite Defense Fund — Fighting unfair bias against dentists everywhere.</option>
+                        <option value="Serenity Now Research Initiative">Serenity Now Research Initiative — Advancing anger management through loud shouting.</option>
+                        <option value="Save the Kramerica Intern Program">Save the Kramerica Intern Program — One intern. One oil bladder. Endless possibilities.</option>
+                        <option value="The Vandelay Industries Innovation Lab">The Vandelay Industries Innovation Lab — Supporting latex research and import-export operations.</option>
+                      </select>
                     </div>
                     <div className="space-y-2">
                       <label

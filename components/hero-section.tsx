@@ -24,11 +24,11 @@ export function HeroSection() {
           Festivus season.
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
-          <Button size="lg" className="px-8">
-            Donate Now
+          <Button size="lg" className="px-8" asChild>
+            <a href="#contact">Donate Now</a>
           </Button>
-          <Button size="lg" variant="outline" className="px-8">
-            Learn More
+          <Button size="lg" variant="outline" className="px-8" asChild>
+            <a href="#mission">Learn More</a>
           </Button>
         </div>
         <div className="pt-12 flex flex-col sm:flex-row items-center justify-center gap-8">
