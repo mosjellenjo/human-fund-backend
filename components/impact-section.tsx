@@ -49,26 +49,28 @@ export function ImpactSection() {
                   <CardTitle>Annual Volunteers</CardTitle>
                   <CardDescription>Total volunteers engaged per year</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <ChartContainer
-                    config={{
-                      volunteers: {
-                        label: "Volunteers",
-                        color: "hsl(var(--chart-1))",
-                      },
-                    }}
-                    className="h-[400px]"
-                  >
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={impactData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="year" />
-                        <YAxis tickFormatter={(value) => (value / 10).toString()} />
-                        <ChartTooltip content={<ChartTooltipContent />} />
-                        <Bar dataKey="volunteers" fill="var(--color-volunteers)" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </ChartContainer>
+                <CardContent className="overflow-x-auto w-full">
+                  <div className="min-w-[350px] sm:min-w-0 w-full">
+                    <ChartContainer
+                      config={{
+                        volunteers: {
+                          label: "Volunteers",
+                          color: "hsl(var(--chart-1))",
+                        },
+                      }}
+                      className="h-[250px] sm:h-[400px] w-full"
+                    >
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={impactData}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="year" />
+                          <YAxis tickFormatter={(value) => (value / 10).toString()} />
+                          <ChartTooltip content={<ChartTooltipContent />} />
+                          <Bar dataKey="volunteers" fill="var(--color-volunteers)" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </ChartContainer>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -78,26 +80,28 @@ export function ImpactSection() {
                   <CardTitle>Projects Completed</CardTitle>
                   <CardDescription>Number of projects completed per year</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <ChartContainer
-                    config={{
-                      projects: {
-                        label: "Projects",
-                        color: "hsl(var(--chart-2))",
-                      },
-                    }}
-                    className="h-[400px]"
-                  >
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={impactData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="year" />
-                        <YAxis tickFormatter={(value) => (value / 2).toString()} />
-                        <ChartTooltip content={<ChartTooltipContent />} />
-                        <Bar dataKey="projects" fill="var(--color-projects)" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </ChartContainer>
+                <CardContent className="overflow-x-auto w-full">
+                  <div className="min-w-[350px] sm:min-w-0 w-full">
+                    <ChartContainer
+                      config={{
+                        projects: {
+                          label: "Projects",
+                          color: "hsl(var(--chart-2))",
+                        },
+                      }}
+                      className="h-[250px] sm:h-[400px] w-full"
+                    >
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={impactData}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="year" />
+                          <YAxis tickFormatter={(value) => (value / 2).toString()} />
+                          <ChartTooltip content={<ChartTooltipContent />} />
+                          <Bar dataKey="projects" fill="var(--color-projects)" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </ChartContainer>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
