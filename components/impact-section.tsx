@@ -61,10 +61,10 @@ export function ImpactSection() {
                       className="h-[250px] sm:h-[400px] w-full"
                     >
                       <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={impactData} margin={{ left: 20, right: 20 }}>
+                        <BarChart data={impactData} margin={{ left: 0, right: 20 }}>
                           <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="year" padding={{ left: 30, right: 30 }} />
-                          <YAxis tickFormatter={(value) => (value / 10).toString()} />
+                          <XAxis dataKey="year" padding={{ right: 30 }} />
+                          <YAxis width={48} tickFormatter={(value) => (value / 10).toString()} />
                           <ChartTooltip content={<ChartTooltipContent />} />
                           <Bar dataKey="volunteers" fill="var(--color-volunteers)" />
                         </BarChart>
@@ -92,10 +92,10 @@ export function ImpactSection() {
                       className="h-[250px] sm:h-[400px] w-full"
                     >
                       <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={impactData} margin={{ left: 20, right: 20 }}>
+                        <BarChart data={impactData} margin={{ left: 0, right: 20 }}>
                           <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="year" padding={{ left: 30, right: 30 }} />
-                          <YAxis tickFormatter={(value) => (value / 2).toString()} />
+                          <XAxis dataKey="year" padding={{ right: 30 }} />
+                          <YAxis width={48} tickFormatter={(value) => (value / 2).toString()} />
                           <ChartTooltip content={<ChartTooltipContent />} />
                           <Bar dataKey="projects" fill="var(--color-projects)" />
                         </BarChart>
