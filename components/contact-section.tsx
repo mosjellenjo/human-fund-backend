@@ -7,27 +7,44 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import emailjs from 'emailjs-com'
 
 export function ContactSection() {
   const [formState, setFormState] = useState({
     name: "",
     email: "",
     message: "",
+    donationCause: "",
     submitted: false,
     error: false,
-    donationCause: "",
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const SERVICE_ID = 'service_g5xvxps'
+  const TEMPLATE_ID = 'template_ieyv5x9'
+  const PUBLIC_KEY = 'KjM4ydjWIbZpDNvN_'
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // In a real application, you would send the form data to your server
-    setFormState({
-      ...formState,
-      submitted: true,
-      name: "",
-      email: "",
-      message: "",
-    })
+    setFormState({ ...formState, error: false })
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+      name: formState.name,
+      email: formState.email,
+      message: formState.message,
+      donation_cause: formState.donationCause || 'General Inquiry',
+    }, PUBLIC_KEY)
+      .then(() => {
+        setFormState({
+          name: "",
+          email: "",
+          message: "",
+          donationCause: "",
+          submitted: true,
+          error: false,
+        })
+      }, (error) => {
+        setFormState({ ...formState, error: true })
+        alert('Failed to send message. Please try again.')
+      })
   }
 
   return (
@@ -69,6 +86,7 @@ export function ContactSection() {
                       </label>
                       <Input
                         id="name"
+                        name="name"
                         value={formState.name}
                         onChange={(e) => setFormState({ ...formState, name: e.target.value })}
                         placeholder="Enter your name"
@@ -84,6 +102,7 @@ export function ContactSection() {
                       </label>
                       <Input
                         id="email"
+                        name="email"
                         type="email"
                         value={formState.email}
                         onChange={(e) => setFormState({ ...formState, email: e.target.value })}
@@ -100,6 +119,7 @@ export function ContactSection() {
                       </label>
                       <select
                         id="donation-cause"
+                        name="donation_cause"
                         value={formState.donationCause || ''}
                         onChange={e => setFormState({ ...formState, donationCause: e.target.value })}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:text-sm"
@@ -121,6 +141,7 @@ export function ContactSection() {
                       </label>
                       <Textarea
                         id="message"
+                        name="message"
                         value={formState.message}
                         onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                         placeholder="Enter your message"
