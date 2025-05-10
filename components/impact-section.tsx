@@ -61,7 +61,7 @@ export function ImpactSection() {
                       className="h-[250px] sm:h-[400px] w-full"
                     >
                       <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={impactData}>
+                        <BarChart data={impactData} margin={{ left: 20, right: 20 }}>
                           <CartesianGrid strokeDasharray="3 3" />
                           <XAxis dataKey="year" />
                           <YAxis tickFormatter={(value) => (value / 10).toString()} />
@@ -92,7 +92,7 @@ export function ImpactSection() {
                       className="h-[250px] sm:h-[400px] w-full"
                     >
                       <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={impactData}>
+                        <BarChart data={impactData} margin={{ left: 20, right: 20 }}>
                           <CartesianGrid strokeDasharray="3 3" />
                           <XAxis dataKey="year" />
                           <YAxis tickFormatter={(value) => (value / 2).toString()} />
