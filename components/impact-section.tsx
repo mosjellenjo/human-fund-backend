@@ -63,7 +63,7 @@ export function ImpactSection() {
                       <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={impactData} margin={{ left: 20, right: 20 }}>
                           <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="year" />
+                          <XAxis dataKey="year" padding={{ left: 30, right: 30 }} />
                           <YAxis tickFormatter={(value) => (value / 10).toString()} />
                           <ChartTooltip content={<ChartTooltipContent />} />
                           <Bar dataKey="volunteers" fill="var(--color-volunteers)" />
@@ -94,7 +94,7 @@ export function ImpactSection() {
                       <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={impactData} margin={{ left: 20, right: 20 }}>
                           <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="year" />
+                          <XAxis dataKey="year" padding={{ left: 30, right: 30 }} />
                           <YAxis tickFormatter={(value) => (value / 2).toString()} />
                           <ChartTooltip content={<ChartTooltipContent />} />
                           <Bar dataKey="projects" fill="var(--color-projects)" />
