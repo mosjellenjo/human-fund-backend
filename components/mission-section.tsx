@@ -25,19 +25,19 @@ export function MissionSection() {
             <ul className="grid gap-2">
               <li className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-primary" />
-                <span>Transparency in all donations</span>
+                <span className="text-muted-foreground">Transparency in all donations</span>
               </li>
               <li className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-primary" />
-                <span>Efficiency in fund distribution</span>
+                <span className="text-muted-foreground">Efficiency in fund distribution</span>
               </li>
               <li className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-primary" />
-                <span>Celebration of Festivus for the rest of us</span>
+                <span className="text-muted-foreground">Celebration of Festivus for the rest of us</span>
               </li>
               <li className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-primary" />
-                <span>Commitment to human dignity</span>
+                <span className="text-muted-foreground">Commitment to human dignity</span>
               </li>
             </ul>
           </div>

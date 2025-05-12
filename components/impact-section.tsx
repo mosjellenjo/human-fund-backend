@@ -131,7 +131,7 @@ export function ImpactSection() {
               <CardTitle className="text-sm font-medium">Festivus Celebrations</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">126</div>
+              <div className="text-2xl font-bold">397</div>
               <p className="text-xs text-muted-foreground">Aluminum poles distributed worldwide</p>
             </CardContent>
           </Card>
