@@ -33,10 +33,10 @@ export function ContactSection() {
       donation_cause: formState.donationCause || 'General Inquiry',
     }, PUBLIC_KEY)
       .then(() => {
-        setFormState({
-          name: "",
-          email: "",
-          message: "",
+    setFormState({
+      name: "",
+      email: "",
+      message: "",
           donationCause: "",
           submitted: true,
           error: false,
@@ -44,7 +44,7 @@ export function ContactSection() {
       }, (error) => {
         setFormState({ ...formState, error: true })
         alert('Failed to send message. Please try again.')
-      })
+    })
   }
 
   return (

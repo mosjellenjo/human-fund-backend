@@ -42,13 +42,16 @@ export function MissionSection() {
             </ul>
           </div>
           <div className="flex justify-center">
-            <Image
-              src="/images/logo.png"
-              alt="The Human Fund Logo"
-              width={500}
-              height={500}
-              className="aspect-square object-contain"
-            />
+            <div style={{ height: 240, overflow: 'hidden', display: 'flex', alignItems: 'center' }}>
+              <Image
+                src="/images/Original_logo_bw.png"
+                alt="The Human Fund Logo"
+                width={500}
+                height={500}
+                className="aspect-square object-cover object-center"
+                style={{ marginTop: '30px' }}
+              />
+            </div>
           </div>
         </div>
       </div>
