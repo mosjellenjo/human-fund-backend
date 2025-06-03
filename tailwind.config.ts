@@ -57,6 +57,9 @@ const config = {
           1: "146, 83%, 43%", // Soft green
           2: "200, 83%, 53%", // Soft blue
         },
+        'dark-green': 'hsl(var(--dark-green))',
+        'light-green-text': 'hsl(var(--light-green))',
+        'button-yellow': 'hsl(var(--button-yellow))',
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -76,6 +79,9 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      fontFamily: {
+        sans: ['Open Sans', 'Inter', 'Plus Jakarta Sans', 'Roboto', 'sans-serif'],
       },
     },
   },

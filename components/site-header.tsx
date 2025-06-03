@@ -3,33 +3,33 @@ import { Button } from "@/components/ui/button"
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b-0 bg-dark-green text-light-green-text">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-2 text-white">
             <span className="text-xl font-bold tracking-tight">The Human Fund</span>
           </Link>
-          <span className="text-xs text-muted-foreground hidden sm:inline-block">Money for People</span>
+          <span className="text-xs text-light-green-text hidden sm:inline-block">Money for People</span>
         </div>
         <nav className="hidden md:flex gap-6">
-          <Link href="#mission" className="text-sm font-medium transition-colors hover:text-primary">
+          <Link href="#mission" className="text-sm font-medium transition-colors hover:text-white text-light-green-text">
             Mission
           </Link>
-          <Link href="#impact" className="text-sm font-medium transition-colors hover:text-primary">
+          <Link href="#impact" className="text-sm font-medium transition-colors hover:text-white text-light-green-text">
             Impact
           </Link>
-          <Link href="#team" className="text-sm font-medium transition-colors hover:text-primary">
+          <Link href="#team" className="text-sm font-medium transition-colors hover:text-white text-light-green-text">
             Team
           </Link>
-          <Link href="#contact" className="text-sm font-medium transition-colors hover:text-primary">
+          <Link href="#contact" className="text-sm font-medium transition-colors hover:text-white text-light-green-text">
             Contact
           </Link>
         </nav>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" className="hidden sm:flex">
+          <Button variant="outline" size="sm" className="hidden sm:flex bg-button-yellow text-black border-button-yellow hover:bg-button-yellow/80 hover:border-button-yellow/80">
             Sign In
           </Button>
-          <Button size="sm" asChild>
+          <Button size="sm" asChild className="bg-button-yellow text-black hover:bg-button-yellow/80">
             <a href="#contact">Donate Now</a>
           </Button>
         </div>
