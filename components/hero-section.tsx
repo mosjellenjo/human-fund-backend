@@ -24,10 +24,10 @@ export function HeroSection() {
           Festivus season.
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
-          <Button size="lg" className="px-8 bg-button-yellow text-black hover:bg-button-yellow/80" asChild>
+          <Button size="lg" className="px-8 bg-button-yellow text-black hover:bg-white hover:text-black" asChild>
             <a href="#contact">Donate Now</a>
           </Button>
-          <Button size="lg" variant="outline" className="px-8 bg-button-yellow text-black border-button-yellow hover:bg-button-yellow/80 hover:border-button-yellow/80" asChild>
+          <Button size="lg" variant="outline" className="px-8 bg-button-yellow text-black border-button-yellow hover:bg-white hover:text-black" asChild>
             <a href="#mission">Learn More</a>
           </Button>
         </div>

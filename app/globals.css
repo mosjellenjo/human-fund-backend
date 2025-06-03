@@ -12,6 +12,10 @@ body {
   }
 }
 
+.text-light-green-text {
+  color: #8CFFDA !important;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

@@ -151,7 +151,7 @@ export function ContactSection() {
                         required
                       />
                     </div>
-                    <Button type="submit" className="w-full bg-button-yellow text-black hover:bg-yellow-300">
+                    <Button type="submit" className="w-full bg-button-yellow text-black hover:bg-white hover:text-black">
                       Send Message
                     </Button>
                   </form>

@@ -33,7 +33,7 @@ export function TeamSection() {
               <Button variant="ghost" size="sm" className="text-light-green-text hover:text-white">
                 Contact
               </Button>
-              <Button variant="outline" size="sm" className="bg-button-yellow text-black border-button-yellow hover:bg-button-yellow/80 hover:border-button-yellow/80">
+              <Button variant="outline" size="sm" className="bg-button-yellow text-black border-button-yellow hover:bg-white hover:text-black">
                 Bio
               </Button>
             </CardFooter>
@@ -56,7 +56,7 @@ export function TeamSection() {
               <Button variant="ghost" size="sm" className="text-light-green-text hover:text-white">
                 Contact
               </Button>
-              <Button variant="outline" size="sm" className="bg-button-yellow text-black border-button-yellow hover:bg-button-yellow/80 hover:border-button-yellow/80">
+              <Button variant="outline" size="sm" className="bg-button-yellow text-black border-button-yellow hover:bg-white hover:text-black">
                 Bio
               </Button>
             </CardFooter>
@@ -84,7 +84,7 @@ export function TeamSection() {
               <Button variant="ghost" size="sm" className="text-light-green-text hover:text-white">
                 Contact
               </Button>
-              <Button variant="outline" size="sm" className="bg-button-yellow text-black border-button-yellow hover:bg-button-yellow/80 hover:border-button-yellow/80">
+              <Button variant="outline" size="sm" className="bg-button-yellow text-black border-button-yellow hover:bg-white hover:text-black">
                 Bio
               </Button>
             </CardFooter>
