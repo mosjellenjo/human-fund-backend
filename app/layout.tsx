@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   title: 'The Human Fund',
   description: 'The Human Fund - Making a difference in people\'s lives',
   generator: 'v0.dev',
+  icons: {
+    icon: '/images/Original_logo_bw_humans2.png',
+    apple: '/images/Original_logo_bw_humans2.png',
+  },
 }
 
 export default function RootLayout({
