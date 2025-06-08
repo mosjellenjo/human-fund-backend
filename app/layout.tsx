@@ -6,8 +6,8 @@ export const metadata: Metadata = {
   description: 'The Human Fund - Making a difference in people\'s lives',
   generator: 'v0.dev',
   icons: {
-    icon: '/images/Original_logo_bw_humans2.png',
-    apple: '/images/Original_logo_bw_humans2.png',
+    icon: '/images/Original_logo_bw_humans3.png',
+    apple: '/images/Original_logo_bw_humans3.png',
   },
   other: {
     'google-site-verification': 'YOUR_VERIFICATION_CODE', // Replace with your actual verification code
