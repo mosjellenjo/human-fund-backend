@@ -3,8 +3,8 @@ import './globals.css'
 import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
-  title: 'The Human Fund',
-  description: 'The Human Fund - Making a difference in people\'s lives',
+  title: 'The Human Fund | Money for People',
+  description: 'The Human Fund is dedicated to making a difference in the lives of people everywhere, especially during the Festivus season.',
   generator: 'v0.dev',
   icons: {
     icon: '/images/Original_logo_bw_humans3.png',
