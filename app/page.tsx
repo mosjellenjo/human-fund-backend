@@ -1,3 +1,4 @@
+import Chatbot from '@/components/Chatbot';
 import { HeroSection } from "@/components/hero-section"
 import { MissionSection } from "@/components/mission-section"
 import { ImpactSection } from "@/components/impact-section"
@@ -13,6 +14,7 @@ export default function Home() {
       <main className="flex-1">
         <HeroSection />
         <MissionSection />
+        <Chatbot />
         <ImpactSection />
         <TeamSection />
         <ContactSection />
