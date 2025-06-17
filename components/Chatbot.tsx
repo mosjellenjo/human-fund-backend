@@ -1,140 +1,155 @@
 "use client";
-import { useRef, useEffect } from 'react';
-import { useChat } from '@ai-sdk/react';
+import { useState, useRef, useEffect, FormEvent } from "react";
 
 export default function Chatbot() {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-    initialMessages: [
-      { id: "initial-greeting", role: "assistant", content: "Hi, I'm KrugerGPT! Ask me anything about The Human Fund, Festivus, or how people can help people." }
-    ]
-  });
+  const [messages, setMessages] = useState<
+    { role: "user" | "assistant"; content: string }[]
+  >([
+    {
+      role: "assistant",
+      content:
+        "Hi, I'm KrugerGPT! Ask me anything about The Human Fund, Festivus, or how people can help people.",
+    },
+  ]);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const chatAreaRef = useRef<HTMLDivElement>(null);
 
-  // Scroll chat area to bottom when new messages are added
   useEffect(() => {
     if (chatAreaRef.current) {
       chatAreaRef.current.scrollTop = chatAreaRef.current.scrollHeight;
     }
-  }, [messages]); // Only depend on messages, isLoading is handled by the hook's internal state.
+  }, [messages]);
 
-  // Function to format text with markdown-style formatting
-  const formatText = (text: string) => {
-    console.log("Original text for formatting:", text);
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!input.trim()) return;
 
-    // Handle bold text (** or __)
-    text = text.replace(/\*\*(.*?)\*\*|__(.*?)__/g, '<strong>$1$2</strong>');
-    // Handle italic text (* or _)
-    text = text.replace(/\*(.*?)\*|_(.*?)_/g, '<em>$1$2</em>');
-    // Handle code blocks (`)
-    text = text.replace(/`(.*?)`/g, '<code>$1</code>');
+    const userMessage = { role: "user", content: input.trim() };
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
+    setIsLoading(true);
 
-    // Handle headings (##, ###, etc.) - up to h6 (Order matters: longest match first)
-    text = text.replace(/^###### (.*)$/gm, '<h6>$1</h6>');
-    text = text.replace(/^##### (.*)$/gm, '<h5>$1</h5>');
-    text = text.replace(/^#### (.*)$/gm, '<h4>$1</h4>');
-    text = text.replace(/^### (.*)$/gm, '<h3>$1</h3>');
-    text = text.replace(/^## (.*)$/gm, '<h2>$1</h2>');
-    text = text.replace(/^# (.*)$/gm, '<h1>$1</h1>');
+    try {
+      const response = await fetch("http://localhost:5000/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question: userMessage.content }),
+      });
 
-    // Handle unordered lists (*, -, +)
-    text = text.replace(/^[\*\-\+]\s+(.*)/gm, '<li>$1</li>');
-    if (text.includes('<li>')) {
-      text = '<ul>' + text + '</ul>';
+      const data = await response.json();
+      const assistantMessage = {
+        role: "assistant",
+        content:
+          data?.answer || "Sorry, I had trouble answering that.",
+      };
+
+      setMessages((prev) => [...prev, assistantMessage]);
+    } catch (err) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: "Sorry, something went wrong. Please try again later.",
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
     }
-
-    // Handle ordered lists (1., 2., etc.)
-    text = text.replace(/^\d+\.\s+(.*)/gm, '<li>$1</li>');
-    if (text.includes('<li>') && !text.includes('<ul>')) { // Ensure it's not already an unordered list
-      text = '<ol>' + text + '</ol>';
-    }
-
-    // Finally, replace newlines with <br/> for proper line breaks (after other block-level parsing)
-    text = text.replace(/\n/g, '<br/>');
-
-    console.log("Formatted HTML output:", text);
-    return text;
   };
 
   return (
-    <section style={{ background: "hsl(var(--dark-green), 1)", padding: "2rem 0" }}>
-      <div style={{
-        maxWidth: 600,
-        margin: "0 auto 1.5rem auto",
-        textAlign: "center",
-      }}>
-        <h2 style={{ color: '#fff', fontSize: 32, fontWeight: 700, marginBottom: 8 }}>
+    <section
+      style={{
+        background: "#0b1f19",
+        padding: "2rem 0",
+        color: "#8CFFDA",
+      }}
+    >
+      <div style={{ maxWidth: 600, margin: "0 auto", textAlign: "center" }}>
+        <h2
+          style={{
+            color: "#fff",
+            fontSize: "2rem",
+            fontWeight: 700,
+            marginBottom: "1rem",
+          }}
+        >
           Ask KrugerGPT Anything
         </h2>
       </div>
+
       <div
         style={{
           maxWidth: 600,
-          margin: "2rem auto 1rem auto",
+          margin: "0 auto",
+          background: "#0b1f19",
           border: "2px solid #8CFFDA",
           borderRadius: 16,
-          padding: 28,
-          background: "hsl(var(--dark-green), 1)",
-          color: "#8CFFDA",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+          padding: 24,
         }}
       >
         <div
           ref={chatAreaRef}
-          style={{ minHeight: 200, maxHeight: 320, overflowY: "auto", paddingRight: 8 }}
+          style={{
+            maxHeight: 320,
+            overflowY: "auto",
+            paddingRight: 8,
+            marginBottom: 16,
+          }}
         >
-        {messages.map((msg) => (
+          {messages.map((msg, idx) => (
             <div
-              key={msg.id}
+              key={idx}
               style={{
                 display: "flex",
-                justifyContent: msg.role === "user" ? "flex-end" : "flex-start",
+                justifyContent:
+                  msg.role === "user" ? "flex-end" : "flex-start",
                 margin: "12px 0",
               }}
             >
               <div
                 style={{
-                  background: "#8CFFDA",
-                  color: "#181028",
-                  borderRadius: 18,
-                  padding: "10px 18px",
+                  background: msg.role === "user" ? "#8CFFDA" : "#262626",
+                  color: msg.role === "user" ? "#181028" : "#8CFFDA",
+                  borderRadius: 16,
+                  padding: "10px 16px",
                   maxWidth: "80%",
-                  fontWeight: 500,
-                  boxShadow: "0 1px 4px rgba(0,0,0,0.07)",
-                  borderTopRightRadius: msg.role === "user" ? 4 : 18,
-                  borderTopLeftRadius: msg.role === "user" ? 18 : 4,
                   textAlign: "left",
-                  alignSelf: msg.role === "user" ? "flex-end" : "flex-start",
                 }}
               >
-                {/* messages from useChat have their content as a string directly for simple text responses */}
-                <span dangerouslySetInnerHTML={{ __html: formatText(msg.content) }} />
+                {msg.content}
               </div>
-          </div>
-        ))}
+            </div>
+          ))}
           {isLoading && (
-            <div style={{ color: "#8CFFDA", margin: "8px 0" }}>
+            <div style={{ marginTop: 12, color: "#8CFFDA" }}>
               KrugerGPT is typing...
             </div>
           )}
-      </div>
-        <form onSubmit={handleSubmit} style={{ display: "flex", gap: 8, marginTop: 16 }}>
-        <input
-          value={input}
-            onChange={handleInputChange}
+        </div>
+
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: "flex", gap: 8, marginTop: 8 }}
+        >
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Type your question..."
             style={{
               flex: 1,
               padding: 12,
+              borderRadius: 8,
+              border: "1px solid #8CFFDA",
               background: "#fff",
               color: "#181028",
-              border: "1px solid #8CFFDA",
-              borderRadius: 8,
               fontSize: 16,
             }}
-          placeholder="Type your message..."
-        />
+          />
           <button
             type="submit"
-            disabled={isLoading || !input.trim()}
+            disabled={isLoading}
             style={{
               background: "#8CFFDA",
               color: "#181028",
@@ -143,6 +158,7 @@ export default function Chatbot() {
               padding: "0 24px",
               fontWeight: 600,
               fontSize: 16,
+              cursor: "pointer",
             }}
           >
             Send
