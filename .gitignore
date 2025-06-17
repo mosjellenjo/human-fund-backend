@@ -25,3 +25,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local database files (ChromaDB) - KEEP LOCALLY, IGNORE FOR GIT
+chroma_db/
+
+# Seinfeld scripts (raw text for RAG) - KEEP LOCALLY, IGNORE FOR GIT
+seinfeld_scripts/
