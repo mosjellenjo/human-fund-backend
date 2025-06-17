@@ -7,7 +7,14 @@ from dotenv import load_dotenv
 import os
 
 app = Flask(__name__)
-CORS(app, resources={r"/ask": {"origins": "http://localhost:3000"}})
+CORS(app, resources={
+    r"/ask": {
+        "origins": [
+            "http://localhost:3000",
+            "https://www.humanfund.no"
+        ]
+    }
+})
 load_dotenv()
 
 # Initialize embeddings + vector store
