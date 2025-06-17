@@ -22,23 +22,11 @@ export function MissionSection() {
                 occasionally, alternative celebrations to Christmas.
               </p>
             </div>
-            <div className="grid gap-2 text-left max-w-sm mx-auto">
-              <div className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-light-green-text flex-shrink-0" />
-                <span className="text-light-green-text">Transparency in all donations</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-light-green-text flex-shrink-0" />
-                <span className="text-light-green-text">Efficiency in fund distribution</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-light-green-text flex-shrink-0" />
-                <span className="text-light-green-text">Celebration of Festivus for the rest of us</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-light-green-text flex-shrink-0" />
-                <span className="text-light-green-text">Commitment to human dignity</span>
-              </div>
+            <div className="max-w-sm mx-auto space-y-2">
+              <p className="text-light-green-text italic">Transparency in all donations.</p>
+              <p className="text-light-green-text italic">Efficiency in fund distribution.</p>
+              <p className="text-light-green-text italic">Celebration of Festivus for the rest of us.</p>
+              <p className="text-light-green-text italic">Commitment to human dignity.</p>
             </div>
           </div>
           <div className="flex justify-center">
