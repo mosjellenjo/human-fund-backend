@@ -12,16 +12,16 @@ export function SiteHeader() {
           <span className="text-xs text-light-green-text hidden sm:inline-block">Money for People</span>
         </div>
         <nav className="hidden md:flex gap-6">
-          <Link href="#mission" className="text-sm font-medium transition-colors text-light-green-text px-2 py-1 hover:bg-white hover:text-dark-green hover:rounded-md">
+          <Link href="#mission" className="text-sm font-medium transition-colors text-light-green-text px-2 py-1 hover:bg-white hover:text-black hover:rounded-md">
             Mission
           </Link>
-          <Link href="#impact" className="text-sm font-medium transition-colors text-light-green-text px-2 py-1 hover:bg-white hover:text-dark-green hover:rounded-md">
+          <Link href="#impact" className="text-sm font-medium transition-colors text-light-green-text px-2 py-1 hover:bg-white hover:text-black hover:rounded-md">
             Impact
           </Link>
-          <Link href="#team" className="text-sm font-medium transition-colors text-light-green-text px-2 py-1 hover:bg-white hover:text-dark-green hover:rounded-md">
+          <Link href="#team" className="text-sm font-medium transition-colors text-light-green-text px-2 py-1 hover:bg-white hover:text-black hover:rounded-md">
             Team
           </Link>
-          <Link href="#contact" className="text-sm font-medium transition-colors text-light-green-text px-2 py-1 hover:bg-white hover:text-dark-green hover:rounded-md">
+          <Link href="#contact" className="text-sm font-medium transition-colors text-light-green-text px-2 py-1 hover:bg-white hover:text-black hover:rounded-md">
             Contact
           </Link>
         </nav>

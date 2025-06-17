@@ -1,30 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server';
+import OpenAI from 'openai';
+import { OpenAIStream, StreamingTextResponse } from 'ai';
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 export async function POST(req: NextRequest) {
-  const { message } = await req.json();
+  // Extract the `messages` from the body of the request
+  const { messages } = await req.json();
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: 'gpt-4o',
-      messages: [{ role: 'user', content: message }],
-    }),
+  // Add a system message to instruct the AI to use markdown
+  const messagesWithMarkdownInstruction = [
+    { role: "system", content: "You are KrugerGPT, a helpful assistant. Please format your responses using markdown, including bolding, italics, headings, and lists where appropriate." },
+    ...messages,
+  ];
+
+  // Request the OpenAI API for the response based on the message
+  const response = await openai.chat.completions.create({
+    model: 'gpt-3.5-turbo',
+    stream: true,
+    messages: messagesWithMarkdownInstruction,
   });
 
-  let data;
-  try {
-    data = await response.json();
-  } catch (e) {
-    return NextResponse.json({ reply: "Sorry, I couldn't understand the response from the server." }, { status: 500 });
-  }
+  // Convert the response into a friendly text-stream
+  const stream = OpenAIStream(response as any);
 
-  if (!data.choices || !data.choices[0]) {
-    return NextResponse.json({ reply: data.error?.message || "Sorry, I couldn't get a response from the AI." }, { status: 500 });
-  }
-
-  return NextResponse.json({ reply: data.choices[0].message.content });
+  // Respond with the stream
+  return new StreamingTextResponse(stream);
 }
