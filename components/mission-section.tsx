@@ -14,32 +14,32 @@ export function MissionSection() {
           </div>
         </div>
         <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
-          <div className="flex flex-col justify-center space-y-4">
+          <div className="flex flex-col justify-center space-y-4 text-center">
             <div className="space-y-2">
               <h3 className="text-2xl font-bold text-white">Our Values</h3>
-              <p className="text-light-green-text">
+              <p className="text-light-green-text max-w-[500px] mx-auto">
                 Founded by Joseph B. Dale, The Human Fund operates on principles of transparency, efficiency, and
                 occasionally, alternative celebrations to Christmas.
               </p>
             </div>
-            <ul className="grid gap-2">
-              <li className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-light-green-text" />
+            <div className="grid gap-2 text-left max-w-sm mx-auto">
+              <div className="flex items-center gap-2">
+                <div className="h-2 w-2 rounded-full bg-light-green-text flex-shrink-0" />
                 <span className="text-light-green-text">Transparency in all donations</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-light-green-text" />
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="h-2 w-2 rounded-full bg-light-green-text flex-shrink-0" />
                 <span className="text-light-green-text">Efficiency in fund distribution</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-light-green-text" />
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="h-2 w-2 rounded-full bg-light-green-text flex-shrink-0" />
                 <span className="text-light-green-text">Celebration of Festivus for the rest of us</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-light-green-text" />
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="h-2 w-2 rounded-full bg-light-green-text flex-shrink-0" />
                 <span className="text-light-green-text">Commitment to human dignity</span>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
           <div className="flex justify-center">
             <div style={{ height: 240, overflow: 'hidden', display: 'flex', alignItems: 'center' }}>
