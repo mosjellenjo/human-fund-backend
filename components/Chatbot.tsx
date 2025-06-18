@@ -2,18 +2,32 @@
 import { useState, useRef, useEffect, FormEvent } from "react";
 
 export default function Chatbot() {
+  const defaultGreetings: { [key: string]: string } = {
+    jerry: "Hi, I'm a representative from The Human Fund. Ask me anything about what we do, Festivus, or how people help people.",
+    george: "Hi, I'm a representative from The Human Fund. Ask me about what we do... unless it's about accounting. Or our boss. Or forms. Please don't ask about forms.",
+    kramer: "Hi there! I'm a representative from The Human Fund. What do you need? Let’s get weird and fix the world!",
+    kruger: "Hey. I'm from The Human Fund, apparently. Ask whatever, it's all good. Or not. No pressure.",
+  };
+
+  const typingStatus: { [key: string]: string } = {
+    jerry: "JerryAI is observationally mulling it over...",
+    george: "George is anxiously cooking up a lie about your question...",
+    kramer: "KramericAI is enthusiastically winging a response...",
+    kruger: "KrugerAI is slowly getting around to maybe answering that...",
+  };
+
+  const [representative, setRepresentative] = useState("jerry");
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<
     { role: "user" | "assistant"; content: string }[]
   >([
     {
       role: "assistant",
-      content:
-        "Hi, I'm JerryAI! Ask me anything about The Human Fund, Festivus, or how people can help people.",
+      content: defaultGreetings["jerry"],
     },
   ]);
 
-  const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const chatAreaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -35,7 +49,10 @@ export default function Chatbot() {
       const response = await fetch("http://localhost:5000/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: userMessage.content }),
+        body: JSON.stringify({
+          question: userMessage.content,
+          persona: representative,
+        }),
       });
 
       const data = await response.json();
@@ -58,6 +75,17 @@ export default function Chatbot() {
     }
   };
 
+  const handlePersonaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newRep = e.target.value;
+    setRepresentative(newRep);
+    setMessages([
+      {
+        role: "assistant",
+        content: defaultGreetings[newRep],
+      },
+    ]);
+  };
+
   return (
     <section
       style={{
@@ -75,8 +103,30 @@ export default function Chatbot() {
             marginBottom: "1rem",
           }}
         >
-          Ask JerryAI Anything
+          Ask a Human Fund Representative
         </h2>
+        <label htmlFor="rep" style={{ marginRight: 8 }}>
+          Choose your representative:
+        </label>
+        <select
+          id="rep"
+          value={representative}
+          onChange={handlePersonaChange}
+          style={{
+            padding: 8,
+            borderRadius: 8,
+            border: "1px solid #8CFFDA",
+            background: "#fff",
+            color: "#181028",
+            fontSize: 13,
+            marginBottom: 16,
+          }}
+        >
+          <option value="jerry">JerryAI</option>
+          <option value="george">VandelAI</option>
+          <option value="kramer">KramericAI</option>
+          <option value="kruger">KrugerAI</option>
+        </select>
       </div>
 
       <div
@@ -92,9 +142,11 @@ export default function Chatbot() {
         <div
           ref={chatAreaRef}
           style={{
-            maxHeight: 320,
+            height: 320,
             overflowY: "auto",
+            overflowX: "hidden",
             paddingRight: 8,
+            paddingTop: 4,
             marginBottom: 16,
           }}
         >
@@ -133,7 +185,7 @@ export default function Chatbot() {
                 lineHeight: 1.3,
               }}
             >
-              JerryAI is typing...
+              {typingStatus[representative]}
             </div>
           )}
         </div>
