@@ -8,9 +8,10 @@ export default function Chatbot() {
     {
       role: "assistant",
       content:
-        "Hi, I'm KrugerGPT! Ask me anything about The Human Fund, Festivus, or how people can help people.",
+        "Hi, I'm JerryAI! Ask me anything about The Human Fund, Festivus, or how people can help people.",
     },
   ]);
+
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const chatAreaRef = useRef<HTMLDivElement>(null);
@@ -40,8 +41,7 @@ export default function Chatbot() {
       const data = await response.json();
       const assistantMessage = {
         role: "assistant",
-        content:
-          data?.answer || "Sorry, I had trouble answering that.",
+        content: data?.answer || "Sorry, I had trouble answering that.",
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
@@ -75,7 +75,7 @@ export default function Chatbot() {
             marginBottom: "1rem",
           }}
         >
-          Ask KrugerGPT Anything
+          Ask JerryAI Anything
         </h2>
       </div>
 
@@ -110,12 +110,14 @@ export default function Chatbot() {
             >
               <div
                 style={{
-                  background: msg.role === "user" ? "#8CFFDA" : "#262626",
-                  color: msg.role === "user" ? "#181028" : "#8CFFDA",
+                  background: msg.role === "user" ? "#8CFFDA" : "#ffffff",
+                  color: msg.role === "user" ? "#181028" : "#000000",
                   borderRadius: 16,
                   padding: "10px 16px",
                   maxWidth: "80%",
                   textAlign: "left",
+                  fontSize: 13,
+                  lineHeight: 1.3,
                 }}
               >
                 {msg.content}
@@ -123,8 +125,15 @@ export default function Chatbot() {
             </div>
           ))}
           {isLoading && (
-            <div style={{ marginTop: 12, color: "#8CFFDA" }}>
-              KrugerGPT is typing...
+            <div
+              style={{
+                marginTop: 12,
+                color: "#8CFFDA",
+                fontSize: 13,
+                lineHeight: 1.3,
+              }}
+            >
+              JerryAI is typing...
             </div>
           )}
         </div>
@@ -144,7 +153,8 @@ export default function Chatbot() {
               border: "1px solid #8CFFDA",
               background: "#fff",
               color: "#181028",
-              fontSize: 16,
+              fontSize: 13,
+              lineHeight: 1.3,
             }}
           />
           <button
