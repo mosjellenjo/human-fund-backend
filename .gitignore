@@ -1,0 +1,21 @@
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment
+.env*
+.vercel/
+
+# Node
+node_modules/
+.next/
+out/
+build/
+*.tsbuildinfo
+next-env.d.ts
+
+# Local Data (ignored for Git, used only locally)
+chroma_db/
+seinfeld_scripts/
