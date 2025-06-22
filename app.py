@@ -51,9 +51,34 @@ qa_chain = RetrievalQA.from_chain_type(
     return_source_documents=True
 )
 
+from langchain_community.document_loaders import TextLoader
+
+script_dir = "seinfeld_scripts"
+persist_dir = "chroma_db"
+
+if not os.path.exists(persist_dir):
+    print("📄 Loading and embedding Seinfeld scripts...")
+    documents = []
+    for filename in os.listdir(script_dir):
+        if filename.endswith(".txt"):
+            path = os.path.join(script_dir, filename)
+            loader = TextLoader(path)
+            documents.extend(loader.load())
+
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+    texts = text_splitter.split_documents(documents)
+
+    vectorstore = Chroma.from_documents(texts, embedding, persist_directory=persist_dir)
+    vectorstore.persist()
+    print(f"✅ Embedded {len(texts)} chunks from {len(documents)} documents")
+else:
+    print("📦 Using existing Chroma DB...")
+
+
 # --- Flask route ---
 @app.route("/ask", methods=["POST"])
 def ask():
+    print("✅ /ask endpoint hit")  # <-- Add this line here
     try:
         data = request.get_json()
         question = data.get("question", "").strip()
@@ -77,4 +102,5 @@ def ask():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
