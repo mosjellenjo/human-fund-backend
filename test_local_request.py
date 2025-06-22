@@ -1,11 +1,23 @@
 import requests
+import json
 
-response = requests.post(
-    "http://127.0.0.1:5000/ask",
-    json={
-        "question": "What were Kramer's demands during the strike?",
-        "persona": "jerry"
+def test_rag_backend():
+    url = "http://localhost:5000/ask"
+    payload = {
+        "question": "What were Kramer's demands when he went on strike, and what did he end up getting?"
     }
-)
 
-print(response.json())
+    try:
+        response = requests.post(url, json=payload)
+        print("Status Code:", response.status_code)
+        print("Raw Text Response:\n", response.text)
+
+        data = response.json()
+        print("Parsed JSON Response:", json.dumps(data, indent=2))
+    except json.JSONDecodeError as e:
+        print("❌ Failed to decode JSON:", e)
+    except Exception as e:
+        print("❌ Request failed:", e)
+
+if __name__ == "__main__":
+    test_rag_backend()
