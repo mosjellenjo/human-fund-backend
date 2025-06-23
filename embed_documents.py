@@ -29,6 +29,7 @@ for filename in os.listdir(SCRIPT_FOLDER):
         docs = loader.load()
         for doc in docs:
             doc.metadata["source"] = filename
+            doc.metadata["title"] = filename.replace(".txt", "")  # ✅ added for possible improved ranking
             documents.append(doc)
 
 print(f"📄 Loaded {len(documents)} files")
@@ -36,8 +37,8 @@ print(f"📄 Loaded {len(documents)} files")
 # Step 2: Split into chunks
 print("✂️ Splitting into smaller chunks (200 chars each)...")
 splitter = RecursiveCharacterTextSplitter(
-    chunk_size=200,
-    chunk_overlap=50,
+    chunk_size=1000,
+    chunk_overlap=150,
     separators=["\n\n", "\n", ".", "!", "?", " ", ""],
 )
 splits = splitter.split_documents(documents)

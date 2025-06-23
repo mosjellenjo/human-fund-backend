@@ -2,7 +2,7 @@ import requests
 import json
 
 def test_rag_backend():
-    url = "http://localhost:5000/ask"
+    url = "http://localhost:10000/ask"
     payload = {
         "question": "What were Kramer's demands when he went on strike, and what did he end up getting?"
     }
