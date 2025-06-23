@@ -86,7 +86,7 @@ def custom_get_context_with_scores(query):
     return docs
 
 # --- /ask endpoint ---
-@app.route("/ask", methods=["POST"])
+@app.route("/ask", methods=["POST", "OPTIONS"])
 def ask():
     print("✅ /ask endpoint hit")
     try:
@@ -115,6 +115,11 @@ def ask():
     except Exception as e:
         print(f"❌ Error: {str(e)}")
         return jsonify({"error": str(e)}), 500
+
+@app.route("/ping", methods=["HEAD"])
+def ping():
+    return "", 200
+
 
 # --- Run app ---
 if __name__ == "__main__":
