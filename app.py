@@ -16,7 +16,7 @@ load_dotenv()
 
 # --- Flask setup ---
 app = Flask(__name__)
-CORS(app, resources={r"/ask": {"origins": ["http://localhost:3000", "https://www.humanfund.no"]}})
+CORS(app, resources={r"/ask": {"origins": ["http://localhost:3000", "https://www.humanfund.no"]}}, supports_credentials=True)
 
 # --- Prompt template ---
 prompt_template = PromptTemplate(
@@ -86,7 +86,7 @@ def custom_get_context_with_scores(query):
     return docs
 
 # --- /ask endpoint ---
-@app.route("/ask", methods=["POST", "OPTIONS"])
+@app.route("/ask", methods=["POST"])
 def ask():
     print("✅ /ask endpoint hit")
     try:
@@ -115,11 +115,6 @@ def ask():
     except Exception as e:
         print(f"❌ Error: {str(e)}")
         return jsonify({"error": str(e)}), 500
-
-@app.route("/ping", methods=["HEAD"])
-def ping():
-    return "", 200
-
 
 # --- Run app ---
 if __name__ == "__main__":
