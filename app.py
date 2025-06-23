@@ -61,7 +61,7 @@ else:
     vectorstore = Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings)
 
 # --- Retrieval chain with prompt ---
-retriever = vectorstore.as_retriever(search_type="similarity", k=1)
+retriever = vectorstore.as_retriever(search_type="mmr", k=5)
 
 qa_chain = RetrievalQA.from_chain_type(
     llm=ChatOpenAI(temperature=0.2, model="gpt-4o"),
