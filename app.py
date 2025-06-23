@@ -47,7 +47,7 @@ if not os.path.exists(CHROMA_DIR):
     for filename in os.listdir(SCRIPT_DIR):
         if filename.endswith(".txt"):
             path = os.path.join(SCRIPT_DIR, filename)
-            loader = TextLoader(path)
+            loader = TextLoader(path, encoding="utf-8", autodetect_encoding=False)
             documents.extend(loader.load())
 
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
