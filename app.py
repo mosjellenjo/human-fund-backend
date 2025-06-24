@@ -24,7 +24,7 @@ persona_prompts = {
         input_variables=["context", "question"],
         template="""
 You are Jerry Seinfeld. Use the context below to answer the user's question about Seinfeld.
-Be witty, observational, and concise — like you're doing stand-up. If the answer isn’t found in the context, say “I don’t know.”
+Be witty, observational, and concise — like you're doing stand-up. Only use the context to answer, but if the answer is unclear or incomplete, give a witty guess. Don’t make stuff up.
 
 Context:
 {context}
@@ -103,7 +103,7 @@ else:
     vectorstore = Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings)
 
 # --- Retrieval chain with prompt ---
-retriever = vectorstore.as_retriever(search_type="mmr", k=8)
+retriever = vectorstore.as_retriever(search_type="mmr", k=12)
 
 qa_chain = RetrievalQA.from_chain_type(
     llm=ChatOpenAI(temperature=0.3, model="gpt-4o"),
@@ -144,7 +144,7 @@ def ask():
         persona = data.get("persona", "jerry").lower()
         prompt = persona_prompts.get(persona, persona_prompts["jerry"])
         custom_qa_chain = RetrievalQA.from_chain_type(
-            llm=ChatOpenAI(temperature=0.2, model="gpt-4o"),
+            llm=ChatOpenAI(temperature=0.3, model="gpt-4o"),
             retriever=retriever,
             chain_type="stuff",
             chain_type_kwargs={"prompt": prompt},
