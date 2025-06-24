@@ -13,7 +13,7 @@ def test_rag_backend():
         print("Raw Text Response:\n", response.text)
 
         data = response.json()
-        print("Parsed JSON Response:", json.dumps(data, indent=2))
+        print("Parsed JSON Response:", json.dumps(data, indent=2, ensure_ascii=False))
     except json.JSONDecodeError as e:
         print("❌ Failed to decode JSON:", e)
     except Exception as e:

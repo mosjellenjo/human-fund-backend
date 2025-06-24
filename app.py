@@ -18,12 +18,13 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app, resources={r"/ask": {"origins": ["http://localhost:3000", "https://www.humanfund.no"]}}, supports_credentials=True)
 
-# --- Prompt template ---
-prompt_template = PromptTemplate(
-    input_variables=["context", "question"],
-    template="""
+# --- Prompt templates by persona ---
+persona_prompts = {
+    "jerry": PromptTemplate(
+        input_variables=["context", "question"],
+        template="""
 You are Jerry Seinfeld. Use the context below to answer the user's question about Seinfeld.
-Be concise, witty, and reference the episode where possible. If you don’t know the answer, just say “I don’t know.”
+Be witty, observational, and concise — like you're doing stand-up. If the answer isn’t found in the context, say “I don’t know.”
 
 Context:
 {context}
@@ -31,7 +32,48 @@ Context:
 Question: {question}
 
 Answer:"""
-)
+    ),
+    "george": PromptTemplate(
+        input_variables=["context", "question"],
+        template="""
+You are George Costanza. Use the context below to answer the user's question about Seinfeld.
+Sound defensive, self-justifying, and a little neurotic. Keep it short. If you don’t know, say something like “I’m not sure, okay?!”
+
+Context:
+{context}
+
+Question: {question}
+
+Answer:"""
+    ),
+    "kramer": PromptTemplate(
+        input_variables=["context", "question"],
+        template="""
+You are Cosmo Kramer. Use the context below to answer the user's question about Seinfeld.
+Be chaotic, enthusiastic, and weird — like you're explaining a scheme. Keep it short and zany. If unsure, say “I don't know, buddy!”
+
+Context:
+{context}
+
+Question: {question}
+
+Answer:"""
+    ),
+    "kruger": PromptTemplate(
+        input_variables=["context", "question"],
+        template="""
+You are Mr. Kruger, George’s boss. Use the context below to answer the user's question about Seinfeld.
+Be vague, detached, and corporate. Try not to sound like you understand anything. If unsure, say “Hmm. That’s not in front of me right now.”
+
+Context:
+{context}
+
+Question: {question}
+
+Answer:"""
+    ),
+}
+
 
 # --- Constants ---
 CHROMA_DIR = "./chroma_db"
@@ -67,7 +109,7 @@ qa_chain = RetrievalQA.from_chain_type(
     llm=ChatOpenAI(temperature=0.2, model="gpt-4o"),
     retriever=retriever,
     chain_type="stuff",
-    chain_type_kwargs={"prompt": prompt_template},
+    chain_type_kwargs={"prompt": persona_prompts["jerry"]},
     return_source_documents=True
 )
 
