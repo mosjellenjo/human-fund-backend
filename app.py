@@ -141,9 +141,18 @@ def ask():
         # ✅ NEW: Log retrieved documents
         custom_get_context_with_scores(question)
 
-        result = qa_chain.invoke({"query": question})
+        persona = data.get("persona", "jerry").lower()
+        prompt = persona_prompts.get(persona, persona_prompts["jerry"])
+        custom_qa_chain = RetrievalQA.from_chain_type(
+            llm=ChatOpenAI(temperature=0.2, model="gpt-4o"),
+            retriever=retriever,
+            chain_type="stuff",
+            chain_type_kwargs={"prompt": prompt},
+            return_source_documents=True
+        )
+        result = custom_qa_chain.invoke({"query": question})
 
-        answer = result.get("result", "I don't know.")
+        answer = result.get("result") or result.get("answer") or "I don't know."
         sources = list(dict.fromkeys(doc.metadata.get("source", "unknown") for doc in result.get("source_documents", [])))
 
         print(f"\n📤 Answer: {answer}")
