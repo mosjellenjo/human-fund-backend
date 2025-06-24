@@ -103,10 +103,10 @@ else:
     vectorstore = Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings)
 
 # --- Retrieval chain with prompt ---
-retriever = vectorstore.as_retriever(search_type="similarity", k=5)
+retriever = vectorstore.as_retriever(search_type="mmr", k=8)
 
 qa_chain = RetrievalQA.from_chain_type(
-    llm=ChatOpenAI(temperature=0.2, model="gpt-4o"),
+    llm=ChatOpenAI(temperature=0.3, model="gpt-4o"),
     retriever=retriever,
     chain_type="stuff",
     chain_type_kwargs={"prompt": persona_prompts["jerry"]},
