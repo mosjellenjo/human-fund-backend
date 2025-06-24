@@ -50,7 +50,7 @@ if not os.path.exists(CHROMA_DIR):
             loader = TextLoader(path, encoding="utf-8", autodetect_encoding=False)
             documents.extend(loader.load())
 
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1500, chunk_overlap=200)
     texts = text_splitter.split_documents(documents)
 
     vectorstore = Chroma.from_documents(texts, embeddings, persist_directory=CHROMA_DIR)
@@ -61,7 +61,7 @@ else:
     vectorstore = Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings)
 
 # --- Retrieval chain with prompt ---
-retriever = vectorstore.as_retriever(search_type="mmr", k=5)
+retriever = vectorstore.as_retriever(search_type="similarity", k=5)
 
 qa_chain = RetrievalQA.from_chain_type(
     llm=ChatOpenAI(temperature=0.2, model="gpt-4o"),
