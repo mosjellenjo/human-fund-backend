@@ -146,6 +146,8 @@ def ask():
     try:
         data = request.get_json()
         question = data.get("question", "").strip()
+        history = data.get("history", [])
+        formatted_history = "\n".join(history) if history else ""
 
         if not question:
             return jsonify({"error": "Missing 'question' in request"}), 400
@@ -162,7 +164,8 @@ def ask():
             chain_type_kwargs={"prompt": prompt},
             return_source_documents=True
         )
-        result = custom_qa_chain.invoke({"query": question})
+        full_question = f"{formatted_history}\nUser: {question}" if formatted_history else question
+        result = custom_qa_chain.invoke({"query": full_question})
 
         answer = result.get("result") or result.get("answer") or "I don't know."
         sources = list(dict.fromkeys(doc.metadata.get("source", "unknown") for doc in result.get("source_documents", [])))
