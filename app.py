@@ -10,7 +10,9 @@ from langchain.schema import Document  # ✅ NEW
 
 from dotenv import load_dotenv
 import os
-
+import requests  # 🔊 For ElevenLabs API
+ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
+ELEVENLABS_VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID")  # <- Your Jerry voice ID
 # Load environment variables
 load_dotenv()
 
@@ -139,6 +141,32 @@ def custom_get_context_with_scores(query):
 
     return docs
 
+def generate_audio_from_text(text):
+    try:
+        url = f"https://api.elevenlabs.io/v1/text-to-speech/{ELEVENLABS_VOICE_ID}"
+        headers = {
+            "xi-api-key": ELEVENLABS_API_KEY,
+            "Content-Type": "application/json"
+        }
+        payload = {
+            "text": text,
+            "model_id": "eleven_multilingual_v2",  # safest default
+            "voice_settings": {
+                "stability": 0.5,
+                "similarity_boost": 0.75
+            }
+        }
+        response = requests.post(url, json=payload, headers=headers)
+        if response.status_code == 200:
+            return response.content  # binary mp3
+        else:
+            print(f"🔊 ElevenLabs API error: {response.status_code} {response.text}")
+            return None
+    except Exception as e:
+        print(f"🔊 Audio generation failed: {e}")
+        return None
+
+
 # --- /ask endpoint ---
 @app.route("/ask", methods=["POST"])
 def ask():
@@ -173,10 +201,17 @@ def ask():
         print(f"\n📤 Answer: {answer}")
         print(f"📚 Sources: {sources}")
 
+        from base64 import b64encode
+
+        audio_bytes = generate_audio_from_text(answer)
+        audio_base64 = b64encode(audio_bytes).decode("utf-8") if audio_bytes else None
+
         return jsonify({
             "answer": answer,
-            "sources": [sources[0]] if sources else []
+            "sources": [sources[0]] if sources else [],
+            "audio": audio_base64
         })
+
 
     except Exception as e:
         print(f"❌ Error: {str(e)}")
@@ -187,5 +222,5 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port, debug=True)
 
-print("=== Retrieved context ===")
-print(context)
+# print("=== Retrieved context ===")
+# print(context)
