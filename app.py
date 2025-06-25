@@ -106,7 +106,7 @@ if not os.path.exists(CHROMA_DIR):
             loader = TextLoader(path, encoding="utf-8", autodetect_encoding=False)
             documents.extend(loader.load())
 
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1500, chunk_overlap=200)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150)
     texts = text_splitter.split_documents(documents)
 
     vectorstore = Chroma.from_documents(texts, embeddings, persist_directory=CHROMA_DIR)
@@ -117,7 +117,7 @@ else:
     vectorstore = Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings)
 
 # --- Retrieval chain with prompt ---
-retriever = vectorstore.as_retriever(search_type="mmr", k=8)
+retriever = vectorstore.as_retriever(search_type="similarity", k=4)
 
 qa_chain = RetrievalQA.from_chain_type(
     llm=ChatOpenAI(temperature=0.3, model="gpt-4o"),
@@ -176,6 +176,7 @@ def ask():
         data = request.get_json()
         question = data.get("question", "").strip()
         history = data.get("history", [])
+        audio_enabled = data.get("audioEnabled", True)
         formatted_history = "\n".join(history) if history else ""
 
         if not question:
@@ -205,8 +206,11 @@ def ask():
 
         from base64 import b64encode
 
-        audio_bytes = generate_audio_from_text(answer)
-        audio_base64 = b64encode(audio_bytes).decode("utf-8") if audio_bytes else None
+        audio_base64 = None
+        if audio_enabled:
+            audio_bytes = generate_audio_from_text(answer)
+            if audio_bytes:
+                audio_base64 = b64encode(audio_bytes).decode("utf-8")
 
         return jsonify({
             "answer": answer,
