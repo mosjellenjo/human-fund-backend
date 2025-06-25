@@ -117,7 +117,7 @@ else:
     vectorstore = Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings)
 
 # --- Retrieval chain with prompt ---
-retriever = vectorstore.as_retriever(search_type="mmr", k=12)
+retriever = vectorstore.as_retriever(search_type="mmr", k=8)
 
 qa_chain = RetrievalQA.from_chain_type(
     llm=ChatOpenAI(temperature=0.3, model="gpt-4o"),
@@ -171,6 +171,7 @@ def generate_audio_from_text(text):
 @app.route("/ask", methods=["POST"])
 def ask():
     print("✅ /ask endpoint hit")
+    print("🧪 DEBUG: Live backend is running this version of app.py")
     try:
         data = request.get_json()
         question = data.get("question", "").strip()
@@ -190,7 +191,8 @@ def ask():
             retriever=retriever,
             chain_type="stuff",
             chain_type_kwargs={"prompt": prompt},
-            return_source_documents=True
+            return_source_documents=True,
+            input_key="query"
         )
         full_question = f"{formatted_history}\nUser: {question}" if formatted_history else question
         result = custom_qa_chain.invoke({"query": full_question})
@@ -208,7 +210,7 @@ def ask():
 
         return jsonify({
             "answer": answer,
-            "sources": [sources[0]] if sources else [],
+            "sources": sources,
             "audio": audio_base64
         })
 
