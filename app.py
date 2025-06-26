@@ -13,6 +13,8 @@ import os
 import requests  # 🔊 For ElevenLabs API
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
 ELEVENLABS_VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID")  # <- Your Jerry voice ID
+ELEVENLABS_GEORGE_VOICE_ID = os.getenv("ELEVENLABS_GEORGE_VOICE_ID")
+
 # Load environment variables
 load_dotenv()
 
@@ -141,30 +143,45 @@ def custom_get_context_with_scores(query):
 
     return docs
 
-def generate_audio_from_text(text):
+def generate_audio_from_text(text, persona="jerry"):
     try:
-        url = f"https://api.elevenlabs.io/v1/text-to-speech/{ELEVENLABS_VOICE_ID}"
+        if persona == "george":
+            voice_id = ELEVENLABS_GEORGE_VOICE_ID
+            model_id = "eleven_multilingual_v2"
+            voice_settings = {
+                "stability": 0.2,
+                "similarity_boost": 0.95
+            }
+        elif persona == "jerry":
+            voice_id = ELEVENLABS_VOICE_ID
+            model_id = "eleven_multilingual_v2"
+            voice_settings = {
+                "stability": 0.5,
+                "similarity_boost": 0.75
+            }
+        else:
+            return None  # No voice for other personas
+
+        url = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}"
         headers = {
             "xi-api-key": ELEVENLABS_API_KEY,
             "Content-Type": "application/json"
         }
         payload = {
             "text": text,
-            "model_id": "eleven_multilingual_v2",  # safest default
-            "voice_settings": {
-                "stability": 0.5,
-                "similarity_boost": 0.75
-            }
+            "model_id": model_id,
+            "voice_settings": voice_settings
         }
         response = requests.post(url, json=payload, headers=headers)
         if response.status_code == 200:
-            return response.content  # binary mp3
+            return response.content
         else:
             print(f"🔊 ElevenLabs API error: {response.status_code} {response.text}")
             return None
     except Exception as e:
         print(f"🔊 Audio generation failed: {e}")
         return None
+
 
 
 # --- /ask endpoint ---
@@ -208,7 +225,7 @@ def ask():
 
         audio_base64 = None
         if audio_enabled:
-            audio_bytes = generate_audio_from_text(answer)
+            audio_bytes = generate_audio_from_text(answer, persona)
             if audio_bytes:
                 audio_base64 = b64encode(audio_bytes).decode("utf-8")
 
