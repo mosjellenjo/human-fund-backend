@@ -231,7 +231,7 @@ def ask():
 
         return jsonify({
             "answer": answer,
-            "sources": sources,
+            #"sources": sources,
             "audio": audio_base64
         })
 
