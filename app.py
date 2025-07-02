@@ -108,7 +108,7 @@ if not os.path.exists(CHROMA_DIR):
             loader = TextLoader(path, encoding="utf-8", autodetect_encoding=False)
             documents.extend(loader.load())
 
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
     texts = text_splitter.split_documents(documents)
 
     vectorstore = Chroma.from_documents(texts, embeddings, persist_directory=CHROMA_DIR)
